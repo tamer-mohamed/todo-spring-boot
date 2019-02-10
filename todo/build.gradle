@@ -1,0 +1,65 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.2.RELEASE'
+        springSecurityVersion = '5.1.2.RELEASE'
+	}
+	repositories {
+		maven {
+            url "http://repo.spring.io/plugins-release/"
+        }
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('com.github.ben-manes:gradle-versions-plugin:0.17.0')
+	}
+}
+
+plugins {
+    id 'net.ltgt.apt' version '0.10'
+    id 'java'
+    id 'jacoco'
+    id 'io.spring.dependency-management' version '1.0.6.RELEASE'
+    id 'com.github.ben-manes.versions' version '0.17.0'
+    id 'org.springframework.boot' version '2.1.1.RELEASE'
+}
+
+group = 'com.todo'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+archivesBaseName = 'app'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-websocket:${springBootVersion}")
+
+	compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+
+    compile('org.postgresql:postgresql')
+
+	// Annotation processors
+    annotationProcessor('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok')
+    testAnnotationProcessor('org.projectlombok:lombok')
+    testCompileOnly('org.projectlombok:lombok')
+
+    // Spring Security
+    compile("org.springframework.boot:spring-boot-starter-security:${springBootVersion}")
+    compile("org.springframework.security:spring-security-crypto:${springSecurityVersion}")
+    compile("org.springframework.security:spring-security-messaging:${springSecurityVersion}")
+    compile("org.springframework.security:spring-security-config:${springSecurityVersion}")
+
+    compile('org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE')
+    compile('org.springframework.security:spring-security-jwt:1.0.9.RELEASE')
+
+	annotationProcessor('org.springframework.boot:spring-boot-configuration-processor')
+    compileOnly('org.springframework.boot:spring-boot-configuration-processor')
+}
+

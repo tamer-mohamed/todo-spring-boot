@@ -1,0 +1,30 @@
+version: "3"
+services:
+  todoapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: gradle clean bootRun
+    container_name: todo
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+    environment:
+      - INTERSTELLAR_LOGIN=fake_key
+      - DATABASE_HOST=postgres
+    volumes:
+      - .:/home/gradle/src
+  postgres:
+    image: mdillon/postgis:9.6
+    container_name: todo-db
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=todo
+    volumes:
+      - ./create-local-database.sql:/docker-entrypoint-initdb.d/create-local-database.sql
+      - database:/var/lib/postgresql/data
+
+volumes:
+  database:
